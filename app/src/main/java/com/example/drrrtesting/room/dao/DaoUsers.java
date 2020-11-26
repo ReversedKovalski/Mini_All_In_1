@@ -1,7 +1,6 @@
 package com.example.drrrtesting.room.dao;
 
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
@@ -11,14 +10,14 @@ import com.example.drrrtesting.room.objects.User;
 import java.util.List;
 
 import io.reactivex.Completable;
+import io.reactivex.Flowable;
 import io.reactivex.Single;
-
 
 @Dao
 public interface DaoUsers {
 
     @Query("select * from user")
-    Single<List<User>> getAllUsers();
+    Flowable<List<User>> getAllUsers();
 
     @Query("select * from user where id = :userId")
     Single<User> getUserById(int userId);

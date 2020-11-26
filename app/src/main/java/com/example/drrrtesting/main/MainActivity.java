@@ -4,28 +4,28 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.drrrtesting.R;
+import com.example.drrrtesting.room.objects.User;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
 import dagger.android.support.DaggerAppCompatActivity;
 
-public class MainActivity extends DaggerAppCompatActivity implements View.OnClickListener {
-    private static final String TAG = "MainActivity";
+public class MainActivity extends DaggerAppCompatActivity implements View.OnClickListener, MainActView {
     private Button btnAdd, btnUpdate, btnDelete;
     private EditText edtName, edtEmail, edtPassword;
     protected RecyclerView recViewData;
     protected DataRecViewAdapter adapter;
-    @Inject
-    MainActPresenter mPresenter;
 
+    @Inject
+    MainActPresenterImpl mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,14 +72,14 @@ public class MainActivity extends DaggerAppCompatActivity implements View.OnClic
         switch (v.getId()) {
             case R.id.btnAdd:
                 if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
-                    makeToast("Empty fields");
+                    showError("Empty fields");
                 } else {
                     mPresenter.addUser(name, email, password);
                 }
                 break;
             case R.id.btnDelete:
                 if (name.isEmpty()) {
-                    makeToast("Empty name field");
+                    showError("Empty name field");
                 } else {
                     mPresenter.deleteUserByName(name);
                 }
@@ -87,14 +87,28 @@ public class MainActivity extends DaggerAppCompatActivity implements View.OnClic
         }
     }
 
-    protected void makeToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+
+    @Override
+    public void updateAdapter(List<User> users) {
+        //Возможно надо было закинуть recViewAdapter в презентер, дабы дергать его без посредника
+        adapter.updateUsers(users);
     }
 
-    protected void clearEdts() {
+    @Override
+    public void clearEdts() {
         edtName.setText("");
         edtEmail.setText("");
         edtPassword.setText("");
+    }
+
+    @Override
+    public void showError(String error) {
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showSuccess() {
+        Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
     }
 
     @Override
