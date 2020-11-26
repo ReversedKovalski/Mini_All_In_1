@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".main.MainActivity">
+
+    <Button
+        android:id="@+id/btnAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="add" />
+
+    <Button
+        android:id="@+id/btnUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_toEndOf="@+id/btnAdd"
+        android:text="update" />
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_toEndOf="@+id/btnUpdate"
+        android:text="delete" />
+
+    <RelativeLayout
+        android:id="@+id/edtTxtRelativeLay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnAdd"
+        android:layout_margin="5dp">
+
+        <EditText
+            android:id="@+id/edtName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="15"
+            android:hint="Name"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/edtEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edtName"
+            android:ems="15"
+            android:hint="Email"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/edtPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edtEmail"
+            android:ems="15"
+            android:hint="Password"
+            android:inputType="textVisiblePassword" />
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recViewDataMA"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edtTxtRelativeLay"
+        android:layout_margin="5dp" />
+
+</RelativeLayout>
