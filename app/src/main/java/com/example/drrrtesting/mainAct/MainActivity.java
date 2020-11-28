@@ -1,4 +1,4 @@
-package com.example.drrrtesting.main;
+package com.example.drrrtesting.mainAct;
 
 import android.os.Bundle;
 import android.view.View;
@@ -25,13 +25,12 @@ public class MainActivity extends DaggerAppCompatActivity implements View.OnClic
     protected DataRecViewAdapter adapter;
 
     @Inject
-    MainActPresenterImpl mPresenter;
+    MainActPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mPresenter.attached(this);
         initWidgets();
     }
 
@@ -114,7 +113,6 @@ public class MainActivity extends DaggerAppCompatActivity implements View.OnClic
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mPresenter.disposeAll();
-        mPresenter.detached();
+        mPresenter.activityDead();
     }
 }

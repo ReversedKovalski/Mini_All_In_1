@@ -1,4 +1,4 @@
-package com.example.drrrtesting.main;
+package com.example.drrrtesting.mainAct;
 
 import android.content.Context;
 import android.view.LayoutInflater;

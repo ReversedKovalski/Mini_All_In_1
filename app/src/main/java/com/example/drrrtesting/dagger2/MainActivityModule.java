@@ -1,17 +1,23 @@
 package com.example.drrrtesting.dagger2;
 
 
-import com.example.drrrtesting.main.MainActPresenterImpl;
+import com.example.drrrtesting.mainAct.MainActPresenterImpl;
+import com.example.drrrtesting.mainAct.MainActView;
+import com.example.drrrtesting.mainAct.MainActivity;
 import com.example.drrrtesting.room.dao.DaoUsers;
 
+import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class MainActivityModule {
+public abstract class MainActivityModule {
 
     @Provides
-    MainActPresenterImpl provideMAPresenter(DaoUsers daoUsers){
-        return new MainActPresenterImpl(daoUsers);
+    static MainActPresenterImpl provideMAPresenter(DaoUsers daoUsers,MainActView mainActView){
+        return new MainActPresenterImpl(daoUsers, mainActView);
     }
+
+    @Binds
+    abstract MainActView bindsMainActView(MainActivity mainActivity);
 }

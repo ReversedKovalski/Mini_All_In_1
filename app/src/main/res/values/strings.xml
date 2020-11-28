@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">DRRRtesting</string>
+    <string name="ERROR_CREATING_ACCOUNT">Error try again in few moments</string>
+    <string name="WRONG_FIELDS">Invalid couple password email</string>
 </resources>

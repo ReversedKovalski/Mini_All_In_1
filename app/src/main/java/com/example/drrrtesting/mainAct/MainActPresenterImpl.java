@@ -1,4 +1,4 @@
-package com.example.drrrtesting.main;
+package com.example.drrrtesting.mainAct;
 
 import com.example.drrrtesting.room.dao.DaoUsers;
 import com.example.drrrtesting.room.objects.User;
@@ -12,31 +12,23 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableCompletableObserver;
-import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DisposableSubscriber;
 
 public class MainActPresenterImpl implements MainActPresenter{
-    private WeakReference<MainActView> view;
-    private DaoUsers mDaoUsers;
+    private final MainActView view;
+    private final DaoUsers mDaoUsers;
     private CompositeDisposable cd;
 
     @Inject
-    public MainActPresenterImpl(DaoUsers daoUsers) {
+    public MainActPresenterImpl(DaoUsers daoUsers, MainActView incView) {
         this.mDaoUsers = daoUsers;
+        this.view = incView;
         initWidgets();
     }
 
     private void initWidgets() {
         cd = new CompositeDisposable();
-    }
-
-    protected void attached(MainActView incView){
-        view = new WeakReference<>(incView);
-    }
-
-    protected void detached(){
-        view = null;
     }
 
     @Override
@@ -47,14 +39,13 @@ public class MainActPresenterImpl implements MainActPresenter{
                 .subscribeWith(new DisposableCompletableObserver() {
                     @Override
                     public void onComplete() {
-                        view.get().clearEdts();
-                        view.get().showSuccess();
-                        //getAllUsers();
+                        view.clearEdts();
+                        view.showSuccess();
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        view.get().showError(e.getMessage());
+                        view.showError(e.getMessage());
                     }
                 });
         cd.add(d);
@@ -68,14 +59,13 @@ public class MainActPresenterImpl implements MainActPresenter{
                 .subscribeWith(new DisposableCompletableObserver() {
                     @Override
                     public void onComplete() {
-                        view.get().clearEdts();
-                        view.get().showSuccess();
-                        //getAllUsers();
+                        view.clearEdts();
+                        view.showSuccess();
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        view.get().showError(e.getMessage());
+                        view.showError(e.getMessage());
                     }
                 });
         cd.add(d);
@@ -89,23 +79,24 @@ public class MainActPresenterImpl implements MainActPresenter{
                 .subscribeWith(new DisposableSubscriber<List<User>>() {
                                    @Override
                                    public void onNext(List<User> users) {
-                                       view.get().updateAdapter(users);
+                                       view.updateAdapter(users);
                                    }
 
                                    @Override
                                    public void onError(Throwable t) {
-                                       view.get().showError(t.getMessage());
+                                       view.showError(t.getMessage());
                                    }
 
                                    @Override
                                    public void onComplete() {
-                                       view.get().showError("I'am complete!!1!!, что кстати странно");
+                                       view.showError("I'am complete!!1!!, что кстати странно");
                                    }
                                });
         cd.add(d);
     }
 
-    protected void disposeAll() {
+    @Override
+    public void activityDead() {
         cd.dispose();
     }
 }
